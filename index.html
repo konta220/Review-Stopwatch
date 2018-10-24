@@ -10,9 +10,9 @@
 <body>
     <div id="app">
         <div id="time">{{time}}</div>
-        <button v-on:click="move">Start / Stop</button>
+        <button v-on:click="runBtnClick">{{runnningBtn}}</button>
 
-        <button v-if="!canStartTime">Clear</button>
+        <button v-if="!isRunning" v-on:click="clearBtnClick">Clear</button>
 
         <dl>
             <dt>時刻 <button>Clear</button></dt>

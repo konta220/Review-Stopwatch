@@ -5,8 +5,16 @@ function fillZero2(num) {
 var app = new Vue({
     el: '#app',
     data: {
-        canStartTime: false,
-        timerDate: new Date(),
+        /** 動作中=true */
+        isRunning: false,
+        /** 開始時間 */
+        startDate: undefined,
+        /** 表示時間 */
+        timerDate: new Date(0, 0, 0, 0, 0, 0, 0),
+        /** 0秒にリセット=true */
+        canResetTime: true,
+        /** 毎秒更新の関数オブジェクト */
+        updateTimerInterval: undefined,
     },
     computed: {
         time: function () {
@@ -15,32 +23,43 @@ var app = new Vue({
             return f(date.getHours()) + ":" + f(date.getMinutes())
                 + ":" + f(date.getSeconds());
         },
+
+        runnningBtn: function () {
+            return (this.isRunning ? "Stop" : "Start");
+        },
+
     },
     methods: {
-        move: function (event) {
+        clearBtnClick: function () {
+            this.canResetTime = true;
+            this.timerDate = new Date(0, 0, 0, 0, 0, 0, 0);
+        },
+        runBtnClick: function (event) {
 
-            if (this.canStartTime) {
-                clearInterval(updateTimerInterval);
+            if (this.canResetTime) {
+                this.startDate = new Date();
+                this.canResetTime = false;
+            }
+
+            if (this.isRunning) {
+                clearInterval(this.updateTimerInterval);
             } else {
                 setIntervalUpdateTimerDate();
             }
 
-            this.canStartTime = !this.canStartTime;
+            this.isRunning = !this.isRunning;
         },
     }
 });
 
-let startDate = new Date();
-let updateTimerInterval = undefined;
-
 function setIntervalUpdateTimerDate() {
-    startDate = new Date();
+
     updateTimerDate();
     // １秒後の表示を更新
-    updateTimerInterval = setInterval(updateTimerDate, 1000);
+    app.updateTimerInterval = setInterval(updateTimerDate, 1000);
 }
 
 function updateTimerDate() {
     // setMillSecond
-    app.timerDate = new Date(0, 0, 0, 0, 0, 0, new Date() - startDate);
+    app.timerDate = new Date(0, 0, 0, 0, 0, 0, new Date() - app.startDate);
 }
