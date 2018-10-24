@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <title>Review-Stopwatch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script defer src="src/app.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="time">{{time}}</div>
+        <button v-on:click="move">Start / Stop</button>
+
+        <button v-if="!canStartTime">Clear</button>
+
+        <dl>
+            <dt>時刻 <button>Clear</button></dt>
+            <dd>2018/10/24 20:07 開始</dd>
+            <dd>2018/10/24 20:15 停止</dd>
+            <dd>2018/10/24 20:20 再開</dd>
+        </dl>
+
+        <dl>
+            <dt>人数</dt>
+            <dd>00:30:07 × <input type="number" value="2">名 = 01:30:21</dd>
+        </dl>
+
+        <dl>
+            <dt>時間給</dt>
+            <dd>00:30:07 × <input type="number" value="850"> yen/hour = 425 yen</dd>
+            <dd>XXX yen × XX persons = yen</dd>
+        </dl>
+    </div>
+</body>
+
+</html>
