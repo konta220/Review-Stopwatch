@@ -59,6 +59,9 @@ var app = new Vue({
         clearBtnClick: function (event) {
             this.timerDate = new Date(0, 0, 0, 0, 0, 0, 0);
         },
+        recordsClearBtnClick: function (event) {
+            this.timeRecords = [];
+        },
         runBtnClick: function (event) {
 
             let runType = null;
@@ -106,7 +109,8 @@ var app = new Vue({
 
 function clearTimer() {
     const d = app.timerDate;
-    return (d.getDate() == d.getHours() && d.getMinutes() == d.getSeconds() && d.getMilliseconds() == 0);
+    return (d.getHours() == 0 && d.getMinutes() == 0 &&
+        d.getSeconds() == 0 && d.getMilliseconds() == 0);
 }
 
 function setIntervalUpdateTimerDate() {
