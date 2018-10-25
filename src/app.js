@@ -13,6 +13,12 @@ Date.prototype.formatTime = function () {
     return f(this.getHours()) + ":" + f(this.getMinutes()) + ":" + f(this.getSeconds());
 }
 
+Date.prototype.formatDate = function () {
+    const f = fillZero2;
+    return this.getFullYear() + "/" + f(this.getMonth())
+        + "/" + f(this.getDate()) + " " + this.formatTime();
+}
+
 Date.prototype.getAllHours = function () {
     return this.getHours() + (this.getMinutes() + this.getSeconds() / 60) / 60
 }
@@ -32,6 +38,8 @@ var app = new Vue({
         person: 2,
         wage: 1000,
         personalWage: 0,
+        timeRecords: [
+        ],
     },
     computed: {
         time: function () {
@@ -53,12 +61,21 @@ var app = new Vue({
         },
         runBtnClick: function (event) {
 
-            if (this.isRunning) {
-                clearInterval(this.updateTimerInterval);
+            let runType = null;
 
+            if (this.isRunning) {
+                runType = "停止";
+                clearInterval(this.updateTimerInterval);
             } else {
+                if (clearTimer()) {
+                    runType = "開始"
+                } else {
+                    runType = "再開"
+                }
+
                 setIntervalUpdateTimerDate();
             }
+            this.timeRecords.unshift({ time: new Date(), runType: runType });
 
             this.isRunning = !this.isRunning;
         },
@@ -86,6 +103,11 @@ var app = new Vue({
         }
     }
 });
+
+function clearTimer() {
+    const d = app.timerDate;
+    return (d.getDate() == d.getHours() && d.getMinutes() == d.getSeconds() && d.getMilliseconds() == 0);
+}
 
 function setIntervalUpdateTimerDate() {
     updateTimerDate();

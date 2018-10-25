@@ -1,6 +1,5 @@
 body {
-    background: #4E5D6C;
-    color: #EBEBEB;
+    margin: 0rem 2rem;
 }
 
 #time {
@@ -11,8 +10,10 @@ body {
     font-size: 5rem;
 }
 
-button {
-    height: 2rem;
+
+.btn {
+    width: 10rem;
+    margin: 0.5rem;
 }
 
 input{
