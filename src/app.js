@@ -14,7 +14,13 @@ Date.prototype.formatTime = function () {
 }
 
 Date.prototype.getAllHours = function () {
-    return this.getHours + (this.getMinutes() + this.getSeconds() / 60) / 60
+    return this.getHours() + (this.getMinutes() + this.getSeconds() / 60) / 60
+}
+
+function floor(num, digit) {
+    const calcDigit = Math.pow(10, -digit);
+    const number = num * calcDigit;
+    return Math.floor(number) / calcDigit;
 }
 
 var app = new Vue({
@@ -24,7 +30,7 @@ var app = new Vue({
         timerDate: new Date(0, 0, 0, 0, 0, 0, 0),
         updateTimerInterval: undefined,
         person: 2,
-        wage: 850,
+        wage: 1000,
         personalWage: 0,
     },
     computed: {
@@ -71,11 +77,12 @@ var app = new Vue({
         wageMoney: function () {
             const hours = this.timerDate.getAllHours();
             const wageNum = this.wage;
-            return Math.floor(hours * 1000) / 1000 * wageNum;
+
+            return floor(hours * wageNum, -2);
         },
 
         allWage: function () {
-            return 1 * this.person;
+            return floor(this.wageMoney() * this.person, -2);
         }
     }
 });
