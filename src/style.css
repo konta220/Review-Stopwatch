@@ -7,6 +7,10 @@ body {
     font-size: 10rem;
 }
 
+#milliseconds {
+    font-size: 5rem;
+}
+
 button {
     height: 2rem;
 }

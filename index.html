@@ -9,7 +9,7 @@
 
 <body>
     <div id="app">
-        <div id="time">{{time}}</div>
+        <div id="timer"><span id="time">{{time}}</span> <span id="milliseconds">{{milliseconds}}</span></div>
         <button v-on:click="runBtnClick">{{runnningBtn}}</button>
 
         <button v-if="!isRunning" v-on:click="clearBtnClick">Clear</button>
@@ -23,13 +23,13 @@
 
         <dl>
             <dt>人数</dt>
-            <dd>00:30:07 × <input type="number" value="2">名 = 01:30:21</dd>
+            <dd>{{time}} × <input id="person" v-model="person" type="number" value="2" min="1">名 = {{personTime()}}</dd>
         </dl>
 
         <dl>
             <dt>時間給</dt>
-            <dd>00:30:07 × <input type="number" value="850"> yen/hour = 425 yen</dd>
-            <dd>XXX yen × XX persons = yen</dd>
+            <dd>{{time}} × <input id="wage" v-model="wage" type="number" value="850" min="0"> yen/hour = {{wageMoney()}} yen</dd>
+            <dd>{{wageMoney()}} yen × {{person}} persons = {{allWage()}} yen</dd>
         </dl>
     </div>
 </body>
