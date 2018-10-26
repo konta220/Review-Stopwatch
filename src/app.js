@@ -71,10 +71,19 @@ var app = new Vue({
                 this.comment = "";
             }
         },
+        allReset: function () {
+            if (!confirm("全ての値を初期化しますか？")) {
+                return;
+            }
+            localStorage.clear();
+            this.loadLocalStorage();
+        },
         loadLocalStorage: function () {
 
             const timerDate = localStorage.getItem("timerDate");
-            if (timerDate != null) {
+            if (timerDate == null) {
+                this.timerDate = new Date(0, 0, 0, 0, 0, 0, 0);
+            } else {
                 this.timerDate = new Date(Number(timerDate));
             }
 

@@ -12,8 +12,8 @@
 <body>
     <div id="app">
         <div id="timer">
-            <button type="button" class="close" v-on:click="">
-                <span aria-hidden="true">reset</span>
+            <button type="button" class="close" v-on:click="allReset">
+                <span aria-hidden="true">all reset</span>
             </button>
             <div>
                 <span id="time">{{time}}</span>
@@ -88,7 +88,7 @@
                         <div class="card-body">
                             <div class="card-title"><input id="comment" v-model="comment" type="text" style="width: 100%"
                                     placeholder="LGTM!!" onkeypress="app.sendComment(event);"></div>
-                            <div class="card-subtitle text-muted">{{new Date()}}
+                            <div class="card-subtitle text-muted">{{new Date().formatDate()}}
                                 <button type="button" class="close" v-on:click="sendComment()">
                                     <span aria-hidden="true">Comment</span>
                                 </button>
