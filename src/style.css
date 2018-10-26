@@ -18,6 +18,10 @@ body {
     margin: 0 0.5rem
 }
 
+.card.comment-card {
+    margin: 0.5rem 0;
+}
+
 
 .btn {
     height: 2.5rem;

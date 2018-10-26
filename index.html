@@ -11,105 +11,109 @@
 
 <body>
     <div id="app">
-        <div id="timer">
-            <button type="button" class="close" v-if="!isRunning" v-on:click="allReset">
-                <span aria-hidden="true">all reset</span>
-            </button>
-            <div>
-                <span id="time">{{time}}</span>
-                <span id="milliseconds">{{milliseconds}}</span>
+        <div class="container">
+            <div id="timer">
+                <button type="button" class="close" v-if="!isRunning" v-on:click="allReset">
+                    <span aria-hidden="true">all reset</span>
+                </button>
+                <div>
+                    <span id="time">{{time}}</span>
+                    <span id="milliseconds">{{milliseconds}}</span>
+                </div>
+                <div id="time-control-btn">
+                    <button v-on:click="runBtnClick" class="btn btn-info">{{runnningBtn}}</button>
+                    <button v-if="!isRunning" v-on:click="resetBtnClick" class="btn btn-warning">Reset</button>
+                </div>
             </div>
-            <div id="time-control-btn">
-                <button v-on:click="runBtnClick" class="btn btn-info">{{runnningBtn}}</button>
-                <button v-if="!isRunning" v-on:click="resetBtnClick" class="btn btn-warning">Reset</button>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="bs-component">
-                    <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <div>
-                                    {{wageMoney()}} yen × {{person}} persons =
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="bs-component">
+                        <div class="card border-secondary mb-3">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <div>
+                                        {{wageMoney()}} yen × {{person}} persons =
+                                    </div>
+                                    <div style="text-align: right;">
+                                        {{allWage()}} yen
+                                    </div>
                                 </div>
-                                <div style="text-align: right;">
-                                    {{allWage()}} yen
-                                </div>
+                                <p class="card-text">
+                                    <dl>
+                                        <dt>時間給</dt>
+                                        <dd>
+                                            {{time}} × <input id="wage" v-model="wage" type="number" value="1000" min="0">
+                                            yen/hour
+                                            <div style="text-align: right">
+                                                {{wageMoney()}} yen</div>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>人数</dt>
+                                        <dd>
+                                            {{time}} × <input id="person" v-model="person" type="number" value="2" min="1">名
+                                            <div style="text-align: right">{{personTime()}}</div>
+                                        </dd>
+                                    </dl>
+                                </p>
                             </div>
-                            <p class="card-text">
-                                <dl>
-                                    <dt>時間給</dt>
-                                    <dd>
-                                        {{time}} × <input id="wage" v-model="wage" type="number" value="1000" min="0">
-                                        yen/hour
-                                        <div style="text-align: right">
-                                            {{wageMoney()}} yen</div>
-                                    </dd>
-                                </dl>
-                                <dl>
-                                    <dt>人数</dt>
-                                    <dd>
-                                        {{time}} × <input id="person" v-model="person" type="number" value="2" min="1">名
-                                        <div style="text-align: right">{{personTime()}}</div>
-                                    </dd>
-                                </dl>
-                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="bs-component">
-                    <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">時刻
-                            <button type="button" class="close" v-if="!isRunning" v-on:click="recordsClearBtnClick">
-                                <span aria-hidden="true">clear</span>
-                            </button>
+
+                <div class="col-lg-4">
+                    <div class="bs-component">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <input id="comment" v-model="comment" type="text" style="width: 100%" placeholder="Type LGTM!!"
+                                        onkeypress="app.sendComment(event);">
+                                </div>
+                                <div class="card-subtitle text-muted">{{nowDate}}
+                                    <button type="button" class="close" v-on:click="sendComment()">
+                                        <span aria-hidden="true">Comment</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <dl>
-                                    <dd v-for="timeRecord in timeRecords">
+                        <div class="card comment-card" v-for="(commentItem, commentIndex) in commentList">
+                            <div class="card-body">
+                                <!-- commentRemove(commentItem.date) -->
+                                <button type="button" class="close" v-on:click="commentRemove(commentIndex)">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <p class="card-text">{{commentItem.comment}}</p>
+                                <div class="card-subtitle mb-2 text-muted">{{commentItem.date}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="bs-component">
+                        <div class="card border-secondary mb-3">
+                            <div class="card-header">時刻
+                                <button type="button" class="close" v-if="!isRunning" v-on:click="recordsClearBtnClick">
+                                    <span aria-hidden="true">clear</span>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <div v-for="timeRecord in timeRecords">
                                         {{timeRecord.time}}
                                         <span v-if="timeRecord.runType == '開始'" class="badge badge-info">{{timeRecord.runType}}</span>
                                         <span v-if="timeRecord.runType == '再開'" class="badge badge-success">{{timeRecord.runType}}</span>
                                         <span v-if="timeRecord.runType == '停止'" class="badge badge-danger">{{timeRecord.runType}}</span>
-                                    </dd>
-                                </dl>
-                            </p>
+                                        <hr v-if="timeRecord.runType == '開始'">
+                                    </div>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="bs-component">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <input id="comment" v-model="comment" type="text" style="width: 100%" placeholder="Type LGTM!!"
-                                    onkeypress="app.sendComment(event);">
-                            </div>
-                            <div class="card-subtitle text-muted">{{nowDate}}
-                                <button type="button" class="close" v-on:click="sendComment()">
-                                    <span aria-hidden="true">Comment</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" v-for="(commentItem, commentIndex) in commentList">
-                        <div class="card-body">
-                            <!-- commentRemove(commentItem.date) -->
-                            <button type="button" class="close" v-on:click="commentRemove(commentIndex)">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <p class="card-text">{{commentItem.comment}}</p>
-                            <div class="card-subtitle mb-2 text-muted">{{commentItem.date}}</div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
