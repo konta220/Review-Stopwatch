@@ -39,6 +39,7 @@ var app = new Vue({
         person: 2,
         wage: 1000,
         comment: "",
+        commentList: [],
         personalWage: 0,
         timeRecords: [],
     },
@@ -64,16 +65,21 @@ var app = new Vue({
         sendComment: function (event) {
             //エンターキー押下なら
             if (event === undefined || event.keyCode === 13) {
-                alert("エンターキーが押されたよ！" + this.comment);
+                this.commentList.unshift({ date: new Date().formatDate(), comment: this.comment });
+                localStorage.setItem("commentList", JSON.stringify(this.commentList));
+
                 this.comment = "";
             }
         },
         loadLocalStorage: function () {
 
             const timerDate = localStorage.getItem("timerDate");
-            this.timerDate = new Date(Number(timerDate));
+            if (timerDate != null) {
+                this.timerDate = new Date(Number(timerDate));
+            }
 
             this.timeRecords = JSON.parse(localStorage.getItem("timeRecords")) || [];
+            this.commentList = JSON.parse(localStorage.getItem("commentList")) || [];
         },
 
         resetBtnClick: function (event) {

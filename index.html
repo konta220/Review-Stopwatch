@@ -95,10 +95,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" v-for="commentItem in commentList">
                         <div class="card-body">
-                            <p class="card-text">comment LGTM!!</p>
-                            <div class="card-subtitle mb-2 text-muted">{{new Date()}}</div>
+                            <p class="card-text">{{commentItem.comment}}</p>
+                            <div class="card-subtitle mb-2 text-muted">{{commentItem.date}}</div>
                         </div>
                     </div>
                 </div>
