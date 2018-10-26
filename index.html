@@ -12,13 +12,16 @@
 <body>
     <div id="app">
         <div id="timer">
+            <button type="button" class="close" v-on:click="">
+                <span aria-hidden="true">reset</span>
+            </button>
             <div>
                 <span id="time">{{time}}</span>
                 <span id="milliseconds">{{milliseconds}}</span>
             </div>
             <div id="time-control-btn">
                 <button v-on:click="runBtnClick" class="btn btn-info">{{runnningBtn}}</button>
-                <button v-if="!isRunning" v-on:click="clearBtnClick" class="btn btn-warning">Clear</button>
+                <button v-if="!isRunning" v-on:click="resetBtnClick" class="btn btn-warning">Reset</button>
             </div>
         </div>
 
@@ -67,7 +70,7 @@
                             <p class="card-text">
                                 <dl>
                                     <dd v-for="timeRecord in timeRecords">
-                                        {{timeRecord.time.formatDate()}}
+                                        {{timeRecord.time}}
                                         <span v-if="timeRecord.runType == '開始'" class="badge badge-info">{{timeRecord.runType}}</span>
                                         <span v-if="timeRecord.runType == '再開'" class="badge badge-success">{{timeRecord.runType}}</span>
                                         <span v-if="timeRecord.runType == '停止'" class="badge badge-danger">{{timeRecord.runType}}</span>

@@ -32,17 +32,22 @@ function floor(num, digit) {
 var app = new Vue({
     el: '#app',
     data: {
+        isFirst: true,
         isRunning: false,
         timerDate: new Date(0, 0, 0, 0, 0, 0, 0),
         updateTimerInterval: undefined,
         person: 2,
         wage: 1000,
         personalWage: 0,
-        timeRecords: [
-        ],
+        timeRecords: [],
     },
     computed: {
         time: function () {
+            if (this.isFirst) {
+                this.loadLocalStorage();
+            }
+            this.isFirst = false;
+
             return this.timerDate.formatTime();
         },
 
@@ -55,12 +60,22 @@ var app = new Vue({
         },
     },
     methods: {
+        loadLocalStorage: function () {
 
-        clearBtnClick: function (event) {
+            const timerDate = localStorage.getItem("timerDate");
+            this.timerDate = new Date(Number(timerDate));
+
+            this.timeRecords = JSON.parse(localStorage.getItem("timeRecords")) || [];
+        },
+
+        resetBtnClick: function (event) {
             this.timerDate = new Date(0, 0, 0, 0, 0, 0, 0);
+
+            localStorage.setItem("timerDate", this.timerDate.getTime());
         },
         recordsClearBtnClick: function (event) {
             this.timeRecords = [];
+            localStorage.setItem("timeRecords", JSON.stringify([]));
         },
         runBtnClick: function (event) {
 
@@ -78,7 +93,9 @@ var app = new Vue({
 
                 setIntervalUpdateTimerDate();
             }
-            this.timeRecords.unshift({ time: new Date(), runType: runType });
+
+            this.timeRecords.unshift({ time: new Date().formatDate(), runType: runType });
+            localStorage.setItem("timeRecords", JSON.stringify(this.timeRecords));
 
             this.isRunning = !this.isRunning;
         },
@@ -121,4 +138,6 @@ function setIntervalUpdateTimerDate() {
 function updateTimerDate() {
     app.timerDate = new Date(app.timerDate);
     app.timerDate.setMilliseconds(app.timerDate.getMilliseconds() + intervalMilliSeconds);
+
+    localStorage.setItem("timerDate", app.timerDate.getTime());
 }
