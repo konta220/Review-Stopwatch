@@ -12,7 +12,7 @@
 <body>
     <div id="app">
         <div id="timer">
-            <button type="button" class="close" v-on:click="allReset">
+            <button type="button" class="close" v-if="!isRunning" v-on:click="allReset">
                 <span aria-hidden="true">all reset</span>
             </button>
             <div>
@@ -63,9 +63,11 @@
             <div class="col-lg-4">
                 <div class="bs-component">
                     <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">時刻<button type="button" class="close" v-on:click="recordsClearBtnClick">
+                        <div class="card-header">時刻
+                            <button type="button" class="close" v-if="!isRunning" v-on:click="recordsClearBtnClick">
                                 <span aria-hidden="true">clear</span>
-                            </button></div>
+                            </button>
+                        </div>
                         <div class="card-body">
                             <p class="card-text">
                                 <dl>
@@ -86,8 +88,10 @@
                 <div class="bs-component">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="card-title"><input id="comment" v-model="comment" type="text" style="width: 100%"
-                                    placeholder="LGTM!!" onkeypress="app.sendComment(event);"></div>
+                            <div class="card-title">
+                                <input id="comment" v-model="comment" type="text" style="width: 100%" placeholder="LGTM!!"
+                                    onkeypress="app.sendComment(event);">
+                            </div>
                             <div class="card-subtitle text-muted">{{new Date().formatDate()}}
                                 <button type="button" class="close" v-on:click="sendComment()">
                                     <span aria-hidden="true">Comment</span>
@@ -95,8 +99,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" v-for="commentItem in commentList">
+                    <div class="card" v-for="(commentItem, commentIndex) in commentList">
                         <div class="card-body">
+                            <!-- commentRemove(commentItem.date) -->
+                            <button type="button" class="close" v-on:click="commentRemove(commentIndex)">
+                                <span aria-hidden="true">×</span>
+                            </button>
                             <p class="card-text">{{commentItem.comment}}</p>
                             <div class="card-subtitle mb-2 text-muted">{{commentItem.date}}</div>
                         </div>

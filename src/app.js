@@ -78,6 +78,13 @@ var app = new Vue({
             localStorage.clear();
             this.loadLocalStorage();
         },
+
+        commentRemove: function (commentIndex) {
+            console.log(commentIndex);
+            this.commentList.splice(commentIndex, 1);
+
+            localStorage.setItem("commentList", JSON.stringify(this.commentList));
+        },
         loadLocalStorage: function () {
 
             const timerDate = localStorage.getItem("timerDate");
