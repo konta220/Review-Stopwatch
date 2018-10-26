@@ -38,6 +38,7 @@ var app = new Vue({
         updateTimerInterval: undefined,
         person: 2,
         wage: 1000,
+        comment: "",
         personalWage: 0,
         timeRecords: [],
     },
@@ -60,6 +61,13 @@ var app = new Vue({
         },
     },
     methods: {
+        sendComment: function (event) {
+            //エンターキー押下なら
+            if (event === undefined || event.keyCode === 13) {
+                alert("エンターキーが押されたよ！" + this.comment);
+                this.comment = "";
+            }
+        },
         loadLocalStorage: function () {
 
             const timerDate = localStorage.getItem("timerDate");

@@ -86,12 +86,12 @@
                 <div class="bs-component">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="card-title"><input type="text" style="width: 100%" placeholder="LGTM!!"></div>
+                            <div class="card-title"><input id="comment" v-model="comment" type="text" style="width: 100%"
+                                    placeholder="LGTM!!" onkeypress="app.sendComment(event);"></div>
                             <div class="card-subtitle text-muted">{{new Date()}}
-                                <button type="button" class="close" v-on:click="">
+                                <button type="button" class="close" v-on:click="sendComment()">
                                     <span aria-hidden="true">Comment</span>
                                 </button>
-
                             </div>
                         </div>
                     </div>
