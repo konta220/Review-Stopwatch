@@ -89,10 +89,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="card-title">
-                                <input id="comment" v-model="comment" type="text" style="width: 100%" placeholder="LGTM!!"
+                                <input id="comment" v-model="comment" type="text" style="width: 100%" placeholder="Type LGTM!!"
                                     onkeypress="app.sendComment(event);">
                             </div>
-                            <div class="card-subtitle text-muted">{{new Date().formatDate()}}
+                            <div class="card-subtitle text-muted">{{nowDate}}
                                 <button type="button" class="close" v-on:click="sendComment()">
                                     <span aria-hidden="true">Comment</span>
                                 </button>

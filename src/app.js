@@ -29,24 +29,27 @@ function floor(num, digit) {
     return Math.floor(number) / calcDigit;
 }
 
+let updateTimerInterval = undefined;
+
 var app = new Vue({
     el: '#app',
     data: {
         isFirst: true,
         isRunning: false,
         timerDate: new Date(0, 0, 0, 0, 0, 0, 0),
-        updateTimerInterval: undefined,
         person: 2,
         wage: 1000,
         comment: "",
         commentList: [],
         personalWage: 0,
         timeRecords: [],
+        nowDate: "",
     },
     computed: {
         time: function () {
             if (this.isFirst) {
                 this.loadLocalStorage();
+                this.setIntervalCommentsDate();
             }
             this.isFirst = false;
 
@@ -121,7 +124,7 @@ var app = new Vue({
                     runType = "再開"
                 }
 
-                setIntervalUpdateTimerDate();
+              setIntervalUpdateTimerDate();
             }
 
             this.timeRecords.unshift({ time: new Date().formatDate(), runType: runType });
@@ -150,7 +153,27 @@ var app = new Vue({
 
         allWage: function () {
             return floor(this.wageMoney() * this.person, -2);
-        }
+        },
+
+        setIntervalCommentsDate: function () {
+
+            this.nowDate = new Date().formatDate();
+
+            // 次の1秒までのミリ秒
+            const lessMillSecconds = 1000 - new Date().getMilliseconds();
+
+            // ミリ秒単位で時間を合わせるため、起動契機を修正
+            setTimeout(function () {
+                // １秒後の表示を更新
+                app.nowDate = new Date().formatDate();
+
+                // タイマーを設定
+                setInterval(function () {
+                    app.nowDate = new Date().formatDate();
+                }, 1000);
+
+            }, lessMillSecconds);
+        },
     }
 });
 
