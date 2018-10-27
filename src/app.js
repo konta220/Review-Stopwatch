@@ -124,7 +124,7 @@ var app = new Vue({
                     runType = "再開"
                 }
 
-              setIntervalUpdateTimerDate();
+                setIntervalUpdateTimerDate();
             }
 
             this.timeRecords.unshift({ time: new Date().formatDate(), runType: runType });
@@ -153,6 +153,23 @@ var app = new Vue({
 
         allWage: function () {
             return floor(this.wageMoney() * this.person, -2);
+        },
+
+        saveCommentBtnClick: function () {
+            let content = '';
+            for (let i in this.commentList) {
+                content += this.commentList[i].date + ', ' + this.commentList[i].comment + '\r\n';
+            }
+
+            var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            var blob = new Blob([ bom, content ], { "type" : "text/csv" });
+
+            if (window.navigator.msSaveBlob) {
+                window.navigator.msSaveBlob(blob, "comment.csv");
+                window.navigator.msSaveOrOpenBlob(blob, "comment.csv");
+            } else {
+                document.getElementById("download").href = window.URL.createObjectURL(blob);
+            }
         },
 
         setIntervalCommentsDate: function () {
