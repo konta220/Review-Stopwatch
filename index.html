@@ -21,8 +21,8 @@
                     <span id="milliseconds">{{milliseconds}}</span>
                 </div>
                 <div id="time-control-btn">
-                    <button v-on:click="runBtnClick" class="btn btn-info">{{runnningBtn}}</button>
-                    <button v-if="!isRunning" v-on:click="resetBtnClick" class="btn btn-warning">Reset</button>
+                    <button v-on:click="runBtnClick" class="btn btn-info timeBtn">{{runnningBtn}}</button>
+                    <button v-if="!isRunning" v-on:click="resetBtnClick" class="btn btn-warning timeBtn">Reset</button>
                 </div>
             </div>
 
@@ -90,8 +90,20 @@
                     </div>
                 </div>
 
+
                 <div class="col-lg-4">
                     <div class="bs-component">
+                        <div class="card border-secondary mb-3">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <button type="button" class="btn btn-primary">Save comment</button>
+                                    <a class="btn btn-primary" id="github" href="https://github.com/konta220/Review-Stopwatch"
+                                        target="_blank" rel="noopener">
+                                        View on GitHub
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                         <div class="card border-secondary mb-3">
                             <div class="card-header">時刻
                                 <button type="button" class="close" v-if="!isRunning" v-on:click="recordsClearBtnClick">
