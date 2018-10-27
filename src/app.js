@@ -162,7 +162,7 @@ var app = new Vue({
             }
 
             var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-            var blob = new Blob([ bom, content ], { "type" : "text/csv" });
+            var blob = new Blob([bom, content], { "type": "text/csv" });
 
             if (window.navigator.msSaveBlob) {
                 window.navigator.msSaveBlob(blob, "comment.csv");
@@ -210,4 +210,5 @@ function updateTimerDate() {
     app.timerDate.setMilliseconds(app.timerDate.getMilliseconds() + intervalMilliSeconds);
 
     localStorage.setItem("timerDate", app.timerDate.getTime());
+    document.title = "Review-Stopwatch | " + app.timerDate.formatTime();
 }

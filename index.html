@@ -1,7 +1,40 @@
 <html lang="ja">
 
 <head>
+    <meta charset="UTF-8" lang="ja">
+    <meta http-equiv="content-language" content="ja">
     <title>Review-Stopwatch</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="author" content="konta220">
+    <meta name="theme-color" content="#375a7f">
+    <meta name="description" content="レビュー用ストップウォッチ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="./img/stopwatch-512.png" />
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./R-Stopwatch-ServiceWorker.js', { scope: './' })
+                    .then(registration => {
+                        console.log(registration);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+            });
+        }
+
+        window.addEventListener('online', e => {
+            console.log('online');
+        }, false);
+
+        window.addEventListener('offline', e => {
+            console.log('offline');
+        }, false);
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script defer src="src/app.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css" rel="stylesheet"
