@@ -1,6 +1,7 @@
 Review-Stopwatch
 ==============================================================================
 
+[![R-Stiowatch - Website](https://img.shields.io/website-PWA-down-blue-red/http/shields.io.svg?label=R-Stopwatch&style=flat-square)](https://konta220.github.io/Review-Stopwatch/)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ______________________________________________________________________________
@@ -12,6 +13,5 @@ ______________________________________________________________________________
 ______________________________________________________________________________
 # 特徴
 
-- PWA対応予定 [![R-Stiowatch - Website](https://img.shields.io/website-PWA-down-blue-red/http/shields.io.svg?label=R-Stopwatch&style=flat-square)](https://konta220.github.io/Review-Stopwatch/)
-
+- PWA対応
 - 人数や時給計算に対応
