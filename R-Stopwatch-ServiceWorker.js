@@ -1,7 +1,7 @@
 'use strict';
 
 // 作成日: 2018/10/27
-const CashVersion = '201810271413';
+const CashVersion = '202205211602';
 
 const CashFiles = [
     // CDN
